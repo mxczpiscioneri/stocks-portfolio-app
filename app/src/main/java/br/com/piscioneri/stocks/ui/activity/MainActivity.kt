@@ -23,11 +23,27 @@ class MainActivity : AppCompatActivity() {
 
     private fun notes(): List<Note> {
         return listOf(
-            Note("Leitura",
-                "Livro de Kotlin com Android"),
-            Note("Pesquisa",
-                "Como posso melhorar o código dos meus projetos"),
-            Note("Estudo",
-                "Como sincronizar minha App com um Web Service"))
+            Note(
+                "Petrobras",
+                "PETR4",
+                14,
+                "https://cdn.toroinvestimentos.com.br/corretora/images/quote/PETR.svg",
+                25.0
+            ),
+            Note(
+                "Magazine Luiza",
+                "MGLU$",
+                10,
+                "https://cdn.toroinvestimentos.com.br/corretora/images/quote/MGLU.svg",
+                40.0
+            ),
+            Note(
+                "Petrobras",
+                "PETR4",
+                14,
+                "https://cdn.toroinvestimentos.com.br/corretora/images/quote/PETR.svg",
+                25.0
+            )
+        )
     }
 }
