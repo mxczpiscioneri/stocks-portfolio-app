@@ -7,22 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.piscioneri.stocks.R
-import br.com.piscioneri.stocks.model.Note
+import br.com.piscioneri.stocks.model.Stock
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.adapter_item_layout.view.*
 
-class NoteListAdapter(private val notes: List<Note>, private val context: Context) : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
+class StockListAdapter(private val stocks: List<Stock>, private val context: Context) : RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val note = notes[position]
-        val uri = Uri.parse(note.image)
+        val stock = stocks[position]
+        val uri = Uri.parse(stock.image)
 
         Glide
             .with(context)
             .load(uri)
             .into(holder.imgThumb)
 
-        holder.bindView(note)
+        holder.bindView(stock)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,22 +30,22 @@ class NoteListAdapter(private val notes: List<Note>, private val context: Contex
     }
 
     override fun getItemCount(): Int {
-        return notes.size
+        return stocks.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val tvName = itemView.name
-        val tvCode = itemView.code
-        val tvRecommendations = itemView.recommendations
-        val tvPrice = itemView.price
+        private val tvName = itemView.name
+        private val tvCode = itemView.code
+        private val tvRecommendations = itemView.recommendations
+        private val tvPrice = itemView.price
         val imgThumb = itemView.image
 
-        fun bindView(note: Note) {
-            tvName.text = note.name
-            tvCode.text = note.code
-            tvRecommendations.text = note.recommendations.toString()
-            tvPrice.text = note.price.toString()
+        fun bindView(stock: Stock) {
+            tvName.text = stock.name
+            tvCode.text = stock.code
+            tvRecommendations.text = stock.recommendations.toString()
+            tvPrice.text = stock.price.toString()
         }
 
     }

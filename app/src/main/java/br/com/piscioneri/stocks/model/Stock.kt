@@ -1,6 +1,6 @@
 package br.com.piscioneri.stocks.model
 
-class Note(
+class Stock(
     val name: String,
     val code: String,
     val recommendations: Int,
