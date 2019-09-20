@@ -1,25 +1,23 @@
 package br.com.piscioneri.stocks.ui.adapter
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.adapter_item_layout.view.*
+import com.bumptech.glide.Glide
 import br.com.piscioneri.stocks.R
 import br.com.piscioneri.stocks.model.Stock
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.adapter_item_layout.view.*
 
 class StockListAdapter(private val stocks: List<Stock>, private val context: Context) : RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val stock = stocks[position]
-        val uri = Uri.parse(stock.image)
 
         Glide
             .with(context)
-            .load(uri)
+            .load(stock.image)
             .into(holder.imgThumb)
 
         holder.bindView(stock)
@@ -44,8 +42,8 @@ class StockListAdapter(private val stocks: List<Stock>, private val context: Con
         fun bindView(stock: Stock) {
             tvName.text = stock.name
             tvCode.text = stock.code
-            tvRecommendations.text = stock.recommendations.toString()
-            tvPrice.text = stock.price.toString()
+            tvRecommendations.setText(stock.recommendations.toString())
+            tvPrice.text = "R$ " + stock.price.toString().replace(".", ",")
         }
 
     }
