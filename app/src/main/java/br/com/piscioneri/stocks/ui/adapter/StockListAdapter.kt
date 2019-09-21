@@ -9,6 +9,8 @@ import kotlinx.android.synthetic.main.adapter_item_layout.view.*
 import com.bumptech.glide.Glide
 import br.com.piscioneri.stocks.R
 import br.com.piscioneri.stocks.model.Stock
+import java.text.NumberFormat
+import java.util.*
 
 class StockListAdapter(private val stocks: List<Stock>, private val context: Context) : RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
 
@@ -32,18 +34,20 @@ class StockListAdapter(private val stocks: List<Stock>, private val context: Con
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val tvName = itemView.name
         private val tvCode = itemView.code
-        private val tvRecommendations = itemView.recommendations
+        private val btnRecommendations = itemView.recommendations
         private val tvPrice = itemView.price
         val imgThumb = itemView.image
 
         fun bindView(stock: Stock) {
             tvName.text = stock.name
             tvCode.text = stock.code
-            tvRecommendations.setText(stock.recommendations.toString())
-            tvPrice.text = "R$ " + stock.price.toString().replace(".", ",")
+            btnRecommendations.setText(stock.recommendations.toString())
+
+            val ptBR = Locale("pt", "BR")
+            val currencyFormat = NumberFormat.getCurrencyInstance(ptBR)
+            tvPrice.text = currencyFormat.format(stock.value)
         }
 
     }

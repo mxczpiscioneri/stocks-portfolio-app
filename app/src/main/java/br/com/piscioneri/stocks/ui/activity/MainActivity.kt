@@ -1,13 +1,19 @@
 package br.com.piscioneri.stocks.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import br.com.piscioneri.stocks.R
+import br.com.piscioneri.stocks.RetrofitInitializer
+import br.com.piscioneri.stocks.model.ResponseRecommendations
 import br.com.piscioneri.stocks.model.Stock
 import br.com.piscioneri.stocks.ui.adapter.StockListAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,37 +23,27 @@ class MainActivity : AppCompatActivity() {
         toolbar.title = getString(R.string.app_name)
         setSupportActionBar(toolbar)
 
-        val recyclerView = note_list_recyclerview
-        recyclerView.adapter = StockListAdapter(notes(), this)
+        val call = RetrofitInitializer().recommendatioService().list()
+        call.enqueue(object : Callback<ResponseRecommendations> {
+            override fun onResponse(call: Call<ResponseRecommendations?>?, response: Response<ResponseRecommendations?>?) {
+                response?.body()?.let {
+                    val recommendations: List<Stock> = it.records
+                    configureList(recommendations)
+                }
+            }
 
-        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            override fun onFailure(call: Call<ResponseRecommendations?>?, t: Throwable?) {
+                Log.e("onFailure error", t?.message)
+            }
+        })
 
-        recyclerView.layoutManager = layoutManager
     }
 
-    private fun notes(): List<Stock> {
-        return listOf(
-            Stock(
-                "Petrobras",
-                "PETR4",
-                14,
-                "https://br.advfn.com/common/images/companies/BOV_PETR4.png",
-                25.0
-            ),
-            Stock(
-                "Magazine Luiza",
-                "MGLU3",
-                10,
-                "https://br.advfn.com/common/images/companies/BOV_MGLU3.png",
-                40.0
-            ),
-            Stock(
-                "Petrobras",
-                "PETR4",
-                14,
-                "https://cdn.toroinvestimentos.com.br/corretora/images/quote/PETR.svg",
-                25.0
-            )
-        )
+    private fun configureList(recommendations: List<Stock>) {
+        val recyclerView = note_list_recyclerview
+        recyclerView.adapter = StockListAdapter(recommendations, this)
+
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = layoutManager
     }
 }

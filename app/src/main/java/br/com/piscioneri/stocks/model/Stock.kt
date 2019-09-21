@@ -1,9 +1,21 @@
 package br.com.piscioneri.stocks.model
 
-class Stock(
+data class ResponseRecommendations(
+    val meta: Meta,
+    val records: List<Stock>
+)
+
+data class Meta(
+    val recordCount: Number,
+    val recordTotal: Number,
+    val offset: Number,
+    val limit: Number
+)
+
+data class Stock(
     val name: String,
     val code: String,
-    val recommendations: Int,
+    val recommendations: Number,
     val image: String,
-    val price: Double
+    val value: Double
 )
