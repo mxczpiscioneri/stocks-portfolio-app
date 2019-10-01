@@ -1,8 +1,8 @@
-package br.com.piscioneri.stocks.model
+package br.com.piscioneri.stocks.stock.domain.repository.dto
 
 data class ResponseRecommendations(
     val meta: Meta,
-    val records: List<Stock>
+    val records: List<StockDto>
 )
 
 data class Meta(
@@ -12,7 +12,7 @@ data class Meta(
     val limit: Number
 )
 
-data class Stock(
+data class StockDto(
     val name: String,
     val code: String,
     val recommendations: Number,

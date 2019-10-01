@@ -1,4 +1,4 @@
-package br.com.piscioneri.stocks.ui.adapter
+package br.com.piscioneri.stocks.stock.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.adapter_item_layout.view.*
 import com.bumptech.glide.Glide
 import br.com.piscioneri.stocks.R
-import br.com.piscioneri.stocks.model.Stock
+import br.com.piscioneri.stocks.stock.domain.repository.dto.StockDto
 import java.text.NumberFormat
 import java.util.*
 
-class StockListAdapter(private val stocks: List<Stock>, private val context: Context) : RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
+class StockListAdapter(private val stocks: List<StockDto>, private val context: Context) : RecyclerView.Adapter<StockListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val stock = stocks[position]
@@ -40,7 +40,7 @@ class StockListAdapter(private val stocks: List<Stock>, private val context: Con
         private val tvPrice = itemView.price
         val imgThumb = itemView.image
 
-        fun bindView(stock: Stock) {
+        fun bindView(stock: StockDto) {
             tvName.text = stock.name
             tvCode.text = stock.code
             btnRecommendations.setText(stock.recommendations.toString())
